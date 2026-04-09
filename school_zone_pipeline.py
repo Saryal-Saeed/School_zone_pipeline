@@ -57,7 +57,7 @@ MAX_IMAGES_PER_LOCATION = 3  # Send up to 3 images per detection point
 RATE_LIMIT_DELAY = 4.5       # Seconds between API calls (Gemini free tier is 15 RPM)
 MAX_ZONE_EXTENT_M = 500      # Maximum zone extent in meters (cap)
 DEFAULT_ZONE_EXTENT_M = 150  # Default when no termination sign found
-MAX_LOCATIONS_TO_PROCESS = int(os.environ.get("MAX_LOCATIONS", 20)) # Set to 20 for hackathon demo limits
+MAX_LOCATIONS_TO_PROCESS = int(os.environ.get("MAX_LOCATIONS", 15)) # Set to 15 for hackathon demo limits
 
 # Logging
 logging.basicConfig(
