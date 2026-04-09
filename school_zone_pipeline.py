@@ -57,6 +57,7 @@ MAX_IMAGES_PER_LOCATION = 3  # Send up to 3 images per detection point
 RATE_LIMIT_DELAY = 4.5       # Seconds between API calls (Gemini free tier is 15 RPM)
 MAX_ZONE_EXTENT_M = 500      # Maximum zone extent in meters (cap)
 DEFAULT_ZONE_EXTENT_M = 150  # Default when no termination sign found
+MAX_LOCATIONS_TO_PROCESS = int(os.environ.get("MAX_LOCATIONS", 20)) # Set to 20 for hackathon demo limits
 
 # Logging
 logging.basicConfig(
@@ -338,6 +339,10 @@ def stage1_validate(data: dict) -> pd.DataFrame:
     
     signs = deduplicate_signs(data["signs"])
     downloads = data["downloads"]
+    
+    if MAX_LOCATIONS_TO_PROCESS > 0:
+        log.info(f"  Limiting processing to {MAX_LOCATIONS_TO_PROCESS} locations for demonstration")
+        signs = signs.head(MAX_LOCATIONS_TO_PROCESS)
     
     # Build a lookup from (lat, lon) → image paths
     # The download_summary has input_lat, input_lon matching sign locations
